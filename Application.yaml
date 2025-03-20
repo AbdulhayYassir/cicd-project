@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: project-k8s
-        image: tampoohoonm/jenkins-nodejs:latest
+        image: 3booda24/jenkins-nodejs:latest
         ports:
         - containerPort: 3000
 
