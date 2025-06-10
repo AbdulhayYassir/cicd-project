@@ -2,12 +2,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project-k8s
+  name: project-k8s12
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: project-k8s
+      app: project-k8s12
   template:
     metadata:
       labels:
