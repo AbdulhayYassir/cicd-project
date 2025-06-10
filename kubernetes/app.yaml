@@ -16,7 +16,6 @@ spec:
       containers:
       - name: project-k8s12
         image: 3booda24/test2-nodejs:latest
-        imagePullPolicy: Never 
         ports:
         - containerPort: 3000
 
