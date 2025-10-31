@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-hub-reg'
-        IMAGE_NAME = '3booda24/jenkins-nodejs:latest'
+        DOCKER_CREDENTIALS_ID = 'docker-hub-reg'       
+        IMAGE_NAME = '3booda24/jenkins-nodejs:latest'  
     }
 
     stages {
@@ -16,8 +16,9 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
-                        echo 'Logged in to Docker Hub'
+                    echo 'Logging in to Docker Hub...'
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
+                        echo 'Login successful'
                     }
                 }
             }
@@ -26,6 +27,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
+                    echo 'Building Docker image...'
                     def app = docker.build("${IMAGE_NAME}")
                 }
             }
@@ -34,7 +36,8 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                    echo 'Pushing image to Docker Hub...'
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
                         def app = docker.image("${IMAGE_NAME}")
                         app.push('latest')
                     }
@@ -43,3 +46,4 @@ pipeline {
         }
     }
 }
+
