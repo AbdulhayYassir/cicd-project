@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-hub-reg'       
-        IMAGE_NAME = '3booda24/jenkins-nodejs:latest'  
+        DOCKER_CREDENTIALS_ID = 'dockerhub-creds'       
+        IMAGE_NAME = '3booda24/nodejs9:latest'  
     }
 
     stages {
