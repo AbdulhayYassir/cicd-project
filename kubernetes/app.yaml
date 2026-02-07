@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: project-k8s12
-        image: 3booda24/test2-nodejs:latest
+        image: 3booda24/nodejs9:latest
         ports:
         - containerPort: 3000
 
