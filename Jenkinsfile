@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds'       
-        IMAGE_NAME = '3booda24/nodejs9:latest'  
+        IMAGE_REPO = "3booda24/nodejs9"
+        IMAGE_TAG  = "${BUILD_NUMBER}" 
     }
 
     stages {
@@ -28,7 +29,8 @@ pipeline {
             steps {
                 script {
                     echo 'Building Docker image...'
-                    def app = docker.build("${IMAGE_NAME}")
+                    def app = docker.build("${IMAGE_REPO}:${IMAGE_TAG}")
+                    
                 }
             }
         }
@@ -38,8 +40,8 @@ pipeline {
                 script {
                     echo 'Pushing image to Docker Hub...'
                     docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                        def app = docker.image("${IMAGE_NAME}")
-                        app.push('latest')
+                        def app = docker.image("${IMAGE_REPO}:${IMAGE_TAG}")
+                        app.push()
                     }
                 }
             }
