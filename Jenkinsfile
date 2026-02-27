@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds'       
-        IMAGE_REPO = "3booda24/nodejs9"
+        IMAGE_REPO = "3booda24/nodejs8"
         IMAGE_TAG  = "${BUILD_NUMBER}" 
     }
 
