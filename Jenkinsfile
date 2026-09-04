@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'Dockerhub-cred'
+        DOCKER_CREDENTIALS_ID = 'dockerhub-creds'
         IMAGE_REPO = "abdelhayyaser/nodejs8"
         IMAGE_TAG  = "latest"
     }
