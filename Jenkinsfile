@@ -10,8 +10,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'Master',
-                    url: 'https://github.com/abdelrahmanonline4/GitOps-ci-cd-with-Jenkins-and-Argocd'
+                git branch: 'main',
+                    url: 'https://github.com/AbdulhayYassir/cicd-project'
             }
         }
 
