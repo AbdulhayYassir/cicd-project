@@ -2,15 +2,16 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'dockerhub-creds'       
+        DOCKER_CREDENTIALS_ID = 'Dockerhub-cred'
         IMAGE_REPO = "3booda24/nodejs8"
-        IMAGE_TAG  = "${BUILD_NUMBER}" 
+        IMAGE_TAG  = "latest"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'Master', url: 'https://github.com/abdelrahmanonline4/GitOps-ci-cd-with-Jenkins-and-Argocd'
+                git branch: 'Master',
+                    url: 'https://github.com/abdelrahmanonline4/GitOps-ci-cd-with-Jenkins-and-Argocd'
             }
         }
 
@@ -18,7 +19,11 @@ pipeline {
             steps {
                 script {
                     echo 'Logging in to Docker Hub...'
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
+
+                    docker.withRegistry(
+                        'https://index.docker.io/v1/',
+                        "${DOCKER_CREDENTIALS_ID}"
+                    ) {
                         echo 'Login successful'
                     }
                 }
@@ -29,8 +34,8 @@ pipeline {
             steps {
                 script {
                     echo 'Building Docker image...'
-                    def app = docker.build("${IMAGE_REPO}:${IMAGE_TAG}")
-                    
+
+                    docker.build("${IMAGE_REPO}:${IMAGE_TAG}")
                 }
             }
         }
@@ -39,13 +44,25 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing image to Docker Hub...'
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
+
+                    docker.withRegistry(
+                        'https://index.docker.io/v1/',
+                        "${DOCKER_CREDENTIALS_ID}"
+                    ) {
                         def app = docker.image("${IMAGE_REPO}:${IMAGE_TAG}")
                         app.push()
                     }
                 }
             }
         }
+
+        stage('CD - Deploy to Kubernetes') {
+            steps {
+                sh '''
+                    cd kubernetes
+                    kubectl apply -f .
+                '''
+            }
+        }
     }
 }
-
